@@ -39,40 +39,27 @@ int main(int argc, char** argv)
     {
         bool increase = false;
         bool decrease = false;
-        bool fail = false;
+        bool diff = false;
         int damperCount = 0;
         for (unsigned int j = 0; j < inputLines[i].size()-1; j++)
         {
-            bool damperFail = false;
             if (inputLines[i][j] < inputLines[i][j+1])
             {
-                if (decrease)
-                {
-                    damperFail = true;
-                    fail = true;
-                }
-                else
-                    increase = true; 
+               increase = true; 
+               damperCount++;
             }
             if (inputLines[i][j] > inputLines[i][j+1])
             {
-                if (increase)
-                {
-                    damperFail = true;
-                    fail = true;
-                }
-                else
-                    decrease = true;
+                decrease = true;
+                damperCount++;
             }
             if (abs(inputLines[i][j] - inputLines[i][j+1]) > 3 || abs(inputLines[i][j] - inputLines[i][j+1]) < 1)
             {
-                fail = true;
-                damperFail = true;
-            }
-            if (damperFail)
+                diff = true;
                 damperCount++;
+            }
         }
-        if (fail && damperCount != 1)
+        if (((increase && decrease) || diff) && damperCount > 1)
             res--;
     }
     

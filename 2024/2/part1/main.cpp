@@ -13,29 +13,48 @@ int main(int argc, char** argv)
     std::string line;
     input.open(INPUT_FILE);
     
-    std::vector<int> first_list;
-    std::vector<int> second_list;
+    std::vector<std::vector<int>> inputLines;
 
     while (std::getline(input,line))
     {
-        first_list.push_back(stoi(line.substr(0, line.find("   "))));
-        second_list.push_back(stoi(line.substr(line.find("   ")+1)));
+        std::vector<int> tmp;
+        size_t start = 0;
+        size_t end;
+        while ((end = line.find(' ', start)) != std::string::npos) {
+            tmp.push_back(std::stoi(line.substr(start, end - start)));
+            start = end + 1;
+        }
+        if (start < line.length()) {
+            tmp.push_back(std::stoi(line.substr(start)));
+        }
+
+        inputLines.push_back(tmp);
     }
 
     input.close();
 
-    int res = 0;
-
-    while (first_list.size() && second_list.size())
+    int res = inputLines.size();
+    
+    for (unsigned int i = 0; i < inputLines.size(); i++)
     {
-        int first = *std::min_element(first_list.begin(), first_list.end());
-        first_list.erase(std::min_element(first_list.begin(), first_list.end()));
-        int second = *std::min_element(second_list.begin(), second_list.end());
-        second_list.erase(std::min_element(second_list.begin(), second_list.end()));
-        
-        res += abs(first - second);
-    }
+        bool increase = false;
+        bool decrease = false;
+        bool diff = false;
+        for (unsigned int j = 0; j < inputLines[i].size()-1; j++)
+        {
+            if (inputLines[i][j] < inputLines[i][j+1])
+               increase = true; 
 
+            if (inputLines[i][j] > inputLines[i][j+1])
+                decrease = true;
+
+            if (abs(inputLines[i][j] - inputLines[i][j+1]) > 3 || abs(inputLines[i][j] - inputLines[i][j+1]) < 1)
+                diff = true;
+        }
+        if ((increase && decrease) || diff)
+            res--;
+    }
+    
     std::cout << res << std::endl;
     return 0;
 }
