@@ -5,7 +5,29 @@
 #include <cstdlib>
 #include <fstream>
 
-#define INPUT_FILE "./training"
+//#define INPUT_FILE "./training"
+#define INPUT_FILE "./input"
+
+bool checkIfSafe(std::vector<int> level)
+{
+    bool increase = false;
+    bool decrease = false;
+    for (unsigned int j = 0; j < level.size()-1; j++)
+    {
+        if (abs(level[j] - level[j+1]) > 3 || abs(level[j] - level[j+1]) < 1 )
+            return false;
+
+        if (level[j] < level[j+1])
+            increase = true;
+
+        if (level[j] > level[j+1])
+            decrease = true;
+
+        if (increase && decrease)
+            return false;
+    }
+    return true;
+}
 
 int main(int argc, char** argv)
 {
@@ -33,47 +55,26 @@ int main(int argc, char** argv)
 
     input.close();
 
-    int res = inputLines.size();
+    int res = 0;
     
     for (unsigned int i = 0; i < inputLines.size(); i++)
     {
-        bool increase = false;
-        bool decrease = false;
-        bool fail = false;
-        int damperCount = 0;
-        for (unsigned int j = 0; j < inputLines[i].size()-1; j++)
+        if(checkIfSafe(inputLines[i]))
+            res++;
+        else
         {
-            bool damperFail = false;
-            if (inputLines[i][j] < inputLines[i][j+1])
+            int cpt = 0;
+            for (unsigned int j = 0; j < inputLines[i].size(); j++)
             {
-                if (decrease)
-                {
-                    damperFail = true;
-                    fail = true;
-                }
-                else
-                    increase = true; 
+                std::vector<int> tmp(inputLines[i]);     
+                tmp.erase(tmp.begin()+j);
+
+                if (checkIfSafe(tmp))
+                    cpt++;
             }
-            if (inputLines[i][j] > inputLines[i][j+1])
-            {
-                if (increase)
-                {
-                    damperFail = true;
-                    fail = true;
-                }
-                else
-                    decrease = true;
-            }
-            if (abs(inputLines[i][j] - inputLines[i][j+1]) > 3 || abs(inputLines[i][j] - inputLines[i][j+1]) < 1)
-            {
-                fail = true;
-                damperFail = true;
-            }
-            if (damperFail)
-                damperCount++;
+            if (cpt >= 1)
+                res++;
         }
-        if (fail && damperCount != 1)
-            res--;
     }
     
     std::cout << res << std::endl;

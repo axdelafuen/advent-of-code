@@ -42,14 +42,14 @@ int main(int argc, char** argv)
         bool diff = false;
         for (unsigned int j = 0; j < inputLines[i].size()-1; j++)
         {
+            if (abs(inputLines[i][j] - inputLines[i][j+1]) > 3 || abs(inputLines[i][j] - inputLines[i][j+1]) < 1)
+                diff = true;
+
             if (inputLines[i][j] < inputLines[i][j+1])
                increase = true; 
 
             if (inputLines[i][j] > inputLines[i][j+1])
                 decrease = true;
-
-            if (abs(inputLines[i][j] - inputLines[i][j+1]) > 3 || abs(inputLines[i][j] - inputLines[i][j+1]) < 1)
-                diff = true;
         }
         if ((increase && decrease) || diff)
             res--;
