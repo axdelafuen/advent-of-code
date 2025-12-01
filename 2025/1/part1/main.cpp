@@ -30,9 +30,6 @@ int main() {
                 dial -= 100;
             }
         }
-
-        std::cout << "DEBUG step (" << l << "): " << dial << std::endl;
-
         if (dial == 0)
             result++;
     }
