@@ -20,6 +20,8 @@ int main() {
         int amount = std::stoi(l.substr(1));
         if (l[0] == 'L') {
             dial -= amount;
+            if (dial < 0)
+                result++;
             while (dial < 0) {
                 dial += 100;
             }
