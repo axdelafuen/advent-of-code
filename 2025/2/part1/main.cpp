@@ -45,9 +45,9 @@ int main() {
                 continue;
             
             long firstIPart = std::stol(
-                    iString.substr(iString.length()/2));
-            long secIPart = std::stol(
                     iString.substr(0, iString.length()/2));
+            long secIPart = std::stol(
+                    iString.substr(iString.length()/2));
 
             if (firstIPart == secIPart)
                 result += i;
