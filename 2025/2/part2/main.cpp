@@ -51,15 +51,19 @@ int main() {
                 if (len % blockSize != 0)
                     continue;
                 
-                std::string pattern = iString.substr(0, blockSize);
-                std::string repeated = "";
                 int repeatCount = len / blockSize;
+                if (repeatCount < 2)
+                    continue;
                 
-                for (int r = 0; r < repeatCount; ++r) {
-                    repeated += pattern;
+                bool matches = true;
+                for (int pos = blockSize; pos < len; ++pos) {
+                    if (iString[pos] != iString[pos % blockSize]) {
+                        matches = false;
+                        break;
+                    }
                 }
                 
-                if (repeated == iString && repeatCount >= 2) {
+                if (matches) {
                     isInvalid = true;
                     break;
                 }
