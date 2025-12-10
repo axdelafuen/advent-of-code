@@ -1,10 +1,12 @@
 # Advent of Code
 
+_for details about aoc check:_ [adventofcode.com](https://adventofcode.com)
+
 ## Templates
 
 #### `c++`
 
-- Copy sources
+- Copy sources (`cp templates/cpp/* path/to/your/directory`)
 - Add logic at `// puzzle solver here` line
 - Compile (`g++` or `make`)
 - Copy your puzzle input from aoc website
