@@ -14,7 +14,7 @@ _for details about aoc check:_ [adventofcode.com](https://adventofcode.com)
 
 ## AoC done
 
-- 2025 - `c++`
+- 2025 - `c++` (_only 9 days_)
 - 2024 - `c++` (_only 5 days_)
 - 2023 - `python` (_source code lost_)
 
